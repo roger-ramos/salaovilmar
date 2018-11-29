@@ -39,11 +39,21 @@ Route::get('/agendamentocabeleireiro', function () {
 
 Route::get('/conta', 'ClienteController@mostrarConta')->middleware('auth');
 
+Route::get('/contaadmin', 'CabeleireiroController@mostrarConta')->middleware('auth:admin');
+
 Route::get('/conta/editar', 'ClienteController@mostrarEditarConta')->middleware('auth');
+
+Route::get('/contaadmin/editar', 'CabeleireiroController@mostrarEditarConta')->middleware('auth:admin');
+
+Route::post('/contaadmin/editar/', 'CabeleireiroController@update')->middleware('auth:admin');
 
 Route::post('/conta/editar/', 'ClienteController@update');
 
 Route::get('/conta/alterarsenha', 'ClienteController@mostrarAlterarSenha')->middleware('auth');
+
+Route::get('/contaadmin/alterarsenha', 'CabeleireiroController@mostrarAlterarSenha')->middleware('auth:admin');
+
+Route::post('/contaadmin/alterarsenha', 'CabeleireiroController@updatesenha')->middleware('auth:admin');
 
 Route::post('/conta/alterarsenha', 'ClienteController@updatesenha');
 
@@ -53,7 +63,7 @@ Route::get('/conta/remover/', 'ClienteController@deleteCliente');
 Route::get('/servico', 'ServicoController@todosServicos')->middleware('auth:admin');
 
 //mostrar tela de cadastro de serviços
-Route::get('/cadastrarservico', 'ServicoController@mostrarCadastroServico')->middleware('auth:admin');;
+Route::get('/cadastrarservico', 'ServicoController@mostrarCadastroServico')->middleware('auth:admin');
 
 //enviar os dados do servico e salva no banco
 Route::post('/cadastrarservico', 'ServicoController@criarServico');

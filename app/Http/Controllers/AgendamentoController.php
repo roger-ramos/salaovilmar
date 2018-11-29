@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use phpDocumentor\Reflection\DocBlock\Tags\Link;
 use PhpParser\Node\Stmt\Return_;
+use function Sodium\compare;
 use Symfony\Component\Routing\Route;
 use Validator;
 use Storage;
@@ -46,6 +48,26 @@ class AgendamentoController extends Controller
                 $idcabeleireiro = $cabeleireiro->id;
             }
         }
+        $dataatual = date('y/m/d');
+       // dd($request->data);
+        //dd($dataatual);
+//        if($request->data < date('y/m/d'))
+//        {
+//            $messages = [
+//                'erro' => 'Essa data não pode ser escolhida!',
+//            ];
+//            //$validate = Validator($messages);
+//            return redirect()->route('home.agendar')->withErrors($messages)->withInput();
+//        }
+//
+//        if($request->data) < strtotime($dataatual))
+//        {
+//            $messages = [
+//                'erro' => 'Essa data não pode ser escolhida!',
+//            ];
+//            //$validate = Validator($messages);
+//            return redirect()->route('home.agendar')->withErrors($messages)->withInput();
+//        }
 
         $agendamentos = Agendamento::all();
         foreach ($agendamentos as $agendamento)

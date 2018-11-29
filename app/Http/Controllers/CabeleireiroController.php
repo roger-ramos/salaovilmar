@@ -8,6 +8,7 @@ use App\Cabeleireiro;
 use App\Agendamento;
 use App\Servico;
 use Auth;
+use Illuminate\Support\Facades\Redirect;
 
 class CabeleireiroController extends Controller
 {
@@ -93,10 +94,6 @@ class CabeleireiroController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
-    }
     /**
      * Remove the specified resource from storage.
      *
@@ -136,5 +133,45 @@ class CabeleireiroController extends Controller
             $agendamento->delete();
         }
         return view('gerenciamentoadm')->with('users', $users)->with('agendamentos', $agendamentos)->with('servicos', $servicos)->with('cabeleireiros', $cabeleireiros)->with('data', $data)->with('dataescolhida', $dataescolhida);;
+    }
+
+    public function mostrarConta()
+    {
+        return view('contaadm');
+    }
+
+    public function update(Request $request)
+    {
+        $usuario = Auth::user(); // resgata o usuario
+        //dd($usuario);
+        $usuario->nome = $request->get('nome'); // pega o valor do input username
+        $usuario->descricao = $request->get('descricao'); // pega o valor do input username
+        $usuario->email = $request->get('email'); // pega o valor do input email
+
+
+
+        $usuario->save(); // salva o usuario alterado =)
+
+
+        return Redirect::to('/contaadmin'); // redireciona pra rota que você achar melhor =)
+    }
+
+    public function updatesenha(Request $request)
+    {
+        $usuario = Auth::user(); // resgata o usuario
+        $usuario->password = bcrypt($request->get('password')); // muda a senha do seu usuario já criptografada pela função bcrypt
+        $usuario->save(); // salva o usuario alterado =)
+        return Redirect::to('/contaadmin'); // redireciona pra rota que você achar melhor =)
+    }
+
+    public function mostrarEditarConta()
+    {
+        return view('editarcontaadmin');
+    }
+
+
+    public function mostrarAlterarSenha()
+    {
+        return view('alterarsenhaadmin');
     }
 }

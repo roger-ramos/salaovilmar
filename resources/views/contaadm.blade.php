@@ -8,6 +8,7 @@
     <link rel="icon" href="../../../../favicon.ico">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="../css/Style.css">
+    <link rel="stylesheet" href="<?php echo asset('css/style.css')?>" type="text/css">
     <title>Vilmar cabeleireiro</title>
 
     <!-- Bootstrap core CSS -->
@@ -20,7 +21,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
 </head>
 
-<body >
+<body>
 
 <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
     <a class="navbar-brand" href="/">Vilmar Salão</a>
@@ -33,18 +34,17 @@
             <li class="nav-item ">
                 <a class="nav-link" href="/">Página Inicial<span class="sr-only">(current)</span></a>
             </li>
-            
             <li class="nav-item">
-                    <a class="nav-link" href="/efetuaragendamento-cabeleireiro">Efetuar agendamentos<span class="sr-only">(current)</span></a>
-                </li>
+                <a class="nav-link" href="/efetuaragendamento-cabeleireiro">Efetuar agendamentos<span class="sr-only">(current)</span></a>
+            </li>
             <li class="nav-item active">
-                    <a class="nav-link" href="/admin/dashboard">Gerenciar agendamentos<span class="sr-only">(current)</span></a>
-                </li>
+                <a class="nav-link" href="/admin/dashboard">Gerenciar agendamentos<span class="sr-only">(current)</span></a>
+            </li>
             <li class="nav-item">
                 <a class="nav-link" href="/servico">Gerenciar serviços<span class="sr-only">(current)</span></a>
             </li>
-        </ul>
 
+        </ul>
         <ul class="navbar-nav ml-auto">
             <!-- Authentication Links -->
             @guest
@@ -86,95 +86,58 @@
 <!-- Main jumbotron for a primary marketing message or call to action -->
 <br>
 <br>
+<br>
 <div class="container-fluid">
     <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-        <h1 class="display-4">Área Administrativa - Gerenciar Agendamentos</h1>
+        <h1 class="display-4 text-center">Gerenciar Conta</h1>
         <hr>
     </div>
 </div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
+
+        </div>
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Editar dados da conta</h5>
+
+                    <a href="/contaadmin/editar"  class="btn btn-primary">Alterar dados pessoais</a>
+                    <a href="/contaadmin/alterarsenha"  class="btn btn-info">Alterar senha</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm">
+
+        </div>
+    </div>
+</div>
+
 <div class="container">
 
-        <div class="card-body">
-                <div class="row">
-                            <div class="container">
-                                    <div class="row">
-                                        <form method="POST" action="{{ route('admin.dashboard.agenda') }}" enctype="multipart/form-data">
-                                        @csrf
-                                            <div class="form-group row">
-                                                <h4><label for="name" class="col-md-12">{{ __('Selecione a data dos agendamentos') }}</label></h4>
 
-                                                <div class="col-md-6">
-                                                    <input class="form-control{{ $errors->has('data') ? ' is-invalid' : '' }}" name="data" type="date" value="{{ old('data') }}" id="example-date-input" required autofocus>
-                                                    @if ($errors->has('data'))
-                                                        <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('data') }}</strong>
-                                    </span>
-                                                    @endif
-                                                </div>
-                                            </div>
-                                            <button type="submit" class="btn btn-primary">
-                                                {{ __('Buscar') }}
-                                            </button>
-                                            </div>
-                                        </form>
-                                        <br>
-                                        <br>
-                                        @if($dataescolhida == true)
-                                                <legend>Data: {{ $data }}</legend>
-                                                <table class="table table-inverse">
-                                                    <thead>
-                                                    <tr>
-                                                        <th>Horário</th>
-                                                        <th>Nome cliente</th>
-                                                        <th>Serviço</th>
-                                                        <th>Ações</th>
-                                                    </tr>
-                                                    </thead>
-                                                    @foreach($agendamentos as $agendamento)
-                                                        @if($agendamento->data == $data and $agendamento->cabeleireiro_id == Auth::user()->id)
-
-                                                        <tr>
-
-                                                        <td>{{ $agendamento->hora }} </td>
-                                                        <td>
-                                                            @foreach($users as $user)
-                                                                @if($agendamento->cliente_id == $user->id)
-                                                                    {{ $user->name }}
-                                                                @elseif($agendamento->cliente_id == null)
-                                                                    {{ $agendamento->nomecliente }}
-                                                                @endif
-                                                            @endforeach
-                                                        </td>
-                                                        <td>
-                                                            @foreach($servicos as $servico)
-                                                                @if($agendamento->servico_id == $servico->id)
-                                                                    {{ $servico->tipo_servico }}
-                                                                @endif
-                                                            @endforeach
-                                                        </td>
-                                                        <td><a href="/agendamentoadmin/editar/{{ $agendamento->id }}" type="submit" class="btn btn-primary">Editar</a>
-                                                            <a href="/agendamentoadmin/cancelar/{{ $agendamento->id }}" class="btn btn-danger" type="submit">Cancelar</a></td>
-                                                    </tr>
-
-                                                        @endif
-                                                    @endforeach
-                                                </table>
-                                    <button type="submit" class="btn btn-warning">Gerar relatório de agendamentos do dia</button>
-                                            @endif
-                                    </div>
-                            </div>
-                            
-                            
-                            
-                        </fieldset>
-
-
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Excluir Conta</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-
-
-
+                <div class="modal-body">
+                    Tem certeza que deseja excluir sua conta?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <a type="button" href="/conta/remover" class="btn btn-danger">Sim</a>
+                </div>
             </div>
-
+        </div>
+    </div>
 
 
 </div> <!-- /container -->
