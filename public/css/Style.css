@@ -1,0 +1,50 @@
+body{
+  overflow-x: hidden
+}
+
+.imgprofissionais{
+  width: 242px;
+  height: 200px;
+}
+
+.logado{
+  font-style: italic;
+}
+
+#letramenu{
+  color: black;
+}
+
+h1{
+  color:black;
+}
+
+footer{
+  background-color: #212121;
+  color:#fafafa;
+  text-align: center;
+}
+
+#cor{
+  background: linear-gradient(125deg, #005cbf, lightgray);
+}
+
+#coradm{
+  background: linear-gradient(125deg, #6d6666, lightgray);
+}
+
+#cor2{
+  background: linear-gradient(125deg, dodgerblue, #fafafa);
+}
+
+#cor3{
+  background-image: linear-gradient(to right top, #6d6666, #8f898b, #b1afb0, #d6d5d6, #fdfdfd);
+}
+
+.container-fluid{
+  color:white;
+}
+
+.card-body{
+  background-color: white;
+}
